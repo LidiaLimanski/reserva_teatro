@@ -81,7 +81,7 @@ frm.addEventListener("submit", (e) =>{
     const imgPoltrona = dvPalco.querySelectorAll("img")[poltrona-1];
 
     //Modifica o atributo da imagem
-    imgPoltrona = "img/reservada.jpg";
+    imgPoltrona.src = "img/reservada.jpg";
 
     //Adiciona a poltrona ao vetor
     reservadas.push(poltrona); 
