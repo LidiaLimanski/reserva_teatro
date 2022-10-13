@@ -135,9 +135,11 @@ frm.btRetirar.addEventListener("button", () => {
 
     
 
-//     //if(confirm("Deseja confirmar o cancelamento da reserva?")){
-
-//     const imgPoltrona = dvPalco.querySelectorAll("img")[poltrona-1];
-//     imgPoltrona.src = "img/disponivel.jpg";}
+    if(confirm("Deseja confirmar o cancelamento da reserva?")){
+        for (let i = reservadas.length - 1; i>=0; i--){
+        ocupadas.push(reservadas[i]);
+        }
+    const imgPoltrona = dvPalco.querySelectorAll("img")[poltrona-1];
+    imgPoltrona.src = "img/disponivel.jpg";}
 // }
 )
