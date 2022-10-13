@@ -70,7 +70,7 @@ frm.addEventListener("submit", (e) =>{
     : [];
 
     //validar se a poltrona já estiver ocupada
-    if(reservadas.includes(poltrona.toString())){
+    if(ocupadas.includes(poltrona.toString())){
         alert(`A poltrona ${poltrona} já está ocupada.`);
         frm.inPoltrona.value="";
         frm.inPoltrona.focus();
@@ -114,6 +114,30 @@ frm.btConfirmar.addEventListener("click", () => {
     }
 
     localStorage.setItem("teatroOcupadas", ocupadas.join(";"));
+})
+
+//Adicionar botão para cancelar a reserva
+frm.btRetirar.addEventListener("button", () => {
+
+    const ocupadas = localStorage.getItem("teatroOcupadas")
+    ? localStorage.getItem("teatroOcupadas").split(";")
+    : [];
+
+    //validar se a poltrona já estiver ocupada
+    if(ocupadas.includes(poltrona.toString())){
+        frm.inPoltrona.value="";
+        frm.inPoltrona.focus();
+        return;
+    }
+    
+    //obtém o conteúdo do input
+    const poltrona = Number(frm.inPoltrona.value);  
 
     
-})
+
+//     //if(confirm("Deseja confirmar o cancelamento da reserva?")){
+
+//     const imgPoltrona = dvPalco.querySelectorAll("img")[poltrona-1];
+//     imgPoltrona.src = "img/disponivel.jpg";}
+// }
+)
