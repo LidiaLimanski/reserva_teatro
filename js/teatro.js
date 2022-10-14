@@ -117,29 +117,20 @@ frm.btConfirmar.addEventListener("click", () => {
 })
 
 //Adicionar botão para cancelar a reserva
-frm.btRetirar.addEventListener("button", () => {
-
+frm.btRetirar.addEventListener("click", (e) => {
+    e.preventDefault();
+    const poltrona = Number(frm.inPoltrona.value); 
     const ocupadas = localStorage.getItem("teatroOcupadas")
-    ? localStorage.getItem("teatroOcupadas").split(";")
-    : [];
-
-    //validar se a poltrona já estiver ocupada
-    if(ocupadas.includes(poltrona.toString())){
+     if(ocupadas.includes(poltrona.toString())){
+        //modifica a imagem
+        const imgPoltrona.src = "img/disponivel.jpg";
+        reservadas.pop();
         frm.inPoltrona.value="";
         frm.inPoltrona.focus();
-        return;
-    }
-    
-    //obtém o conteúdo do input
-    const poltrona = Number(frm.inPoltrona.value);  
-
-    
-
-    if(confirm("Deseja confirmar o cancelamento da reserva?")){
-        for (let i = reservadas.length - 1; i>=0; i--){
-        ocupadas.push(reservadas[i]);
-        }
-    const imgPoltrona = dvPalco.querySelectorAll("img")[poltrona-1];
-    imgPoltrona.src = "img/disponivel.jpg";}
-// }
-)
+     }else{
+        alert("Não há uma poltrona selecionada!");
+         frm.inPoltrona.value = "";
+         frm.inPoltrona.focus();
+         return;
+     }
+})
