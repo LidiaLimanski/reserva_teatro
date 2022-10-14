@@ -108,33 +108,45 @@ frm.btConfirmar.addEventListener("click", () => {
         ocupadas.push(reservadas[i]);
 
         //captura a imagem da poltrona, filha e divPalco. É -1 porque começa em 0
-    const imgPoltrona = dvPalco.querySelectorAll("img")[reservadas[i] - 1];
-    //modifica a imagem
-    imgPoltrona.src = "img/ocupada.jpg";
+        const imgPoltrona = dvPalco.querySelectorAll("img")[reservadas[i] - 1];
+        //modifica a imagem
+        imgPoltrona.src = "img/ocupada.jpg";
+        //remove do vetor a reserva alterada
+        reservadas.pop();
     }
 
     localStorage.setItem("teatroOcupadas", ocupadas.join(";"));
 })
 
 //Adicionar botão para cancelar a reserva
-frm.btRetirar.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const poltrona = Number(frm.inPoltrona.value); 
-    const ocupadas = localStorage.getItem("teatroOcupadas");
-
-    if(ocupadas.includes(poltrona.toString())){
-       //modifica a imagem
-       const imgPoltrona = dvPalco.querySelectorAll("img")[reservadas[i] - 1];
-       imgPoltrona.src = "img/disponivel.jpg";
-       
-       reservadas.pop();
-       frm.inPoltrona.value="";
-       frm.inPoltrona.focus();
-    }else{
-       alert("Não há uma poltrona selecionada!");
-        frm.inPoltrona.value = "";
+frm.btRetirar.addEventListener("click", () => {
+    const ocupadas = localStorage.getItem("teatroOcupadas")
+    ? localStorage.getItem("teatroOcupadas").split(";")
+    : [];
+    
+    if(ocupadas.length == 0){
+        alert("Não há poltronas ocupadas");
         frm.inPoltrona.focus();
         return;
     }
+
+    //obtém o conteúdo do input
+    const poltrona = Number(frm.inPoltrona.value); 
+
+    if(confirm(`Quer confirmar o cancelamento da reserva da poltrona ${poltrona}?`)){
+        for(let i = ocupadas.length -1; i >= 0; i--){
+            if(ocupadas[i] == poltrona){
+                //capturar a imagem da poltrona, filha de divPalco
+                const imgPoltrona = dvPalco.querySelectorAll("img")[poltrona - 1];
+                imgPoltrona.src = "img/disponivel.jpg"; //modifica o atributo da img
+                const indice = ocupadas.indexOf(poltrona+"");
+                ocupadas.splice(indice, 1);
+            }
+        }
+    }
+    console.log(poltrona);
+    console.log(ocupadas);
+    frm.inPoltrona.value = "";
+    frm.inPoltrona.focus();
+    localStorage.setItem("teatroOcupadas", ocupadas.join(";"));    
 })
